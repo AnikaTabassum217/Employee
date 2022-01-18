@@ -20,8 +20,6 @@ public class EmployeeController {
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) throws  Exception{
 
-//        employeeDto = employeeService.createEmployee(employeeDto);
-//        return ResponseEntity.ok(employeeDto);
         ApiResponse response = new ApiResponse(false);
         try{
             response = employeeService.createEmployee(employeeDto);
@@ -40,8 +38,17 @@ public class EmployeeController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteEmployee(@PathVariable Long id) throws Exception {
-        boolean result = employeeService.deleteEmployee(id);
-        return ResponseEntity.ok(result);
+
+        ApiResponse response = new ApiResponse(false);
+        try{
+            boolean result = employeeService.deleteEmployee(id);
+            response.setSuccess(result);
+            response.setMessage("Deleted");
+        }catch (Exception ex){
+            response.setError(ex.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 
@@ -86,10 +93,10 @@ public class EmployeeController {
         return employee;
     }
 
-//    @RequestMapping(value = "/findEmployeeByEmployeeAddress", method = RequestMethod.POST)
-//    public @ResponseBody
-//    List<Employee> findEmployeeByEmployeeAddress(@RequestBody EmployeeDto employeeDto) {
-//        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(employeeDto);
-//        return employee;
-//    }
+    @RequestMapping(value = "/findEmployeeByEmployeeAddress", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Employee> findEmployeeByEmployeeAddress(@RequestBody EmployeeDto employeeDto) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(employeeDto);
+        return employee;
+    }
 }
