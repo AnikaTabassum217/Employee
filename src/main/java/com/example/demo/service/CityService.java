@@ -1,7 +1,9 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.City;
+import com.example.demo.entity.Employee;
 import com.example.demo.model.CityDto;
+import com.example.demo.model.EmployeeDto;
 import com.example.demo.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,8 +29,8 @@ public class CityService {
         return cityDto;
     }
 
-    public CityDto updateCity(CityDto cityDto, long id) {
-        Optional<City> cityOptional = cityRepository.findById(id);
+    public CityDto updateCity(CityDto cityDto) {
+        Optional<City> cityOptional = cityRepository.findById(cityDto.getId());
 
         if (cityOptional.isPresent()) {
 
@@ -50,9 +52,14 @@ public class CityService {
         return cityRepository.findAll();
     }
 
-    @Transactional
-    public City findCityById(Long id) {
-        return cityRepository.findById(id).get();
+
+
+    public City findCityById(CityDto cityDto) {
+        Optional<City> city = cityRepository.findById(cityDto.getId());
+        if(city.isPresent()) {
+            return city.get();
+        }
+        return null;
     }
 
     public boolean deleteCity(CityDto cityDto, long id) throws Exception {

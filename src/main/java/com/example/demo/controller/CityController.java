@@ -23,10 +23,9 @@ public class CityController {
         return ResponseEntity.ok(cityDto);
     }
 
-    @PutMapping("/updateCity/{id}")
-    public ResponseEntity updateCity(@RequestBody CityDto cityDto,
-                                         @PathVariable long id) {
-        cityDto = cityService.updateCity(cityDto, id);
+    @PutMapping("/updateCity")
+    public ResponseEntity updateCity(@RequestBody CityDto cityDto) {
+        cityDto = cityService.updateCity(cityDto);
         return ResponseEntity.ok(cityDto);
     }
 
@@ -36,10 +35,10 @@ public class CityController {
         return cityService.findCity();
     }
 
-    @RequestMapping(value = "/findCityById/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/findCityById", method = RequestMethod.GET)
     public @ResponseBody
-    City findCityById(@PathVariable Long id) {
-        City city = cityService.findCityById(id);
+    City findCityById(@RequestBody CityDto cityDto) {
+        City city = cityService.findCityById(cityDto);
         return city;
     }
 
