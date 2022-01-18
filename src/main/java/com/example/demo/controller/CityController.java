@@ -43,9 +43,8 @@ public class CityController {
     }
 
     @DeleteMapping("/deleteCity/{id}")
-    public ResponseEntity deleteCity(@RequestBody CityDto cityDto,
-                                         @PathVariable long id) throws Exception {
-        boolean result = cityService.deleteCity(cityDto, id);
+    public ResponseEntity deleteCity(@PathVariable long id) throws Exception {
+        boolean result = cityService.deleteCity(id);
         return ResponseEntity.ok(result);
     }
 }

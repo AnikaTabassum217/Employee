@@ -112,5 +112,22 @@ public class EmployeeService {
         List<Employee> employee = employeeRepository.findEmployeeByCity(employeeDto.getCityId());
         return employee;
     }
+    public List<Employee>findEmployeeByEmployeeName (EmployeeDto employeeDto) {
+        List<Employee> employee = employeeRepository.findEmployeeByEmployeeName(employeeDto.getName());
+        return employee;
+    }
+    public List<Employee>findEmployeeByEmployeeAge (EmployeeDto employeeDto) {
+        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAge(employeeDto.getAge());
+        return employee;
+    }
 
+    public List<Employee>findEmployeeByEmployeeDept(EmployeeDto employeeDto) {
+        List<Employee> employee = employeeRepository.findEmployeeByEmployeeDept(employeeDto.getDepartment());
+        return employee;
+    }
+//
+//    public List<Employee>findEmployeeByEmployeeAddress(EmployeeDto employeeDto) {
+//        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(employeeDto.getAddress());
+//        return employee;
+//    }
 }

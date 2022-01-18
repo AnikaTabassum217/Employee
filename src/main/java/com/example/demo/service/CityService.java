@@ -62,7 +62,7 @@ public class CityService {
         return null;
     }
 
-    public boolean deleteCity(CityDto cityDto, long id) throws Exception {
+    public boolean deleteCity(long id) throws Exception {
         Optional<City> cityOptional = cityRepository.findById(id);
 
         if (cityOptional.isPresent()) {

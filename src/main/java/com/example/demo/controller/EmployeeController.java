@@ -64,4 +64,32 @@ public class EmployeeController {
         List<Employee> employee = employeeService.findEmployeeByCityId(employeeDto);
         return employee;
     }
+
+    @RequestMapping(value = "/findEmployeeByEmployeeName", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Employee> findEmployeeByEmployeeName(@RequestBody EmployeeDto employeeDto) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeName(employeeDto);
+        return employee;
+    }
+
+    @RequestMapping(value = "/findEmployeeByEmployeeAge", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Employee> findEmployeeByEmployeeAge(@RequestBody EmployeeDto employeeDto) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeAge(employeeDto);
+        return employee;
+    }
+
+    @RequestMapping(value = "/findEmployeeByEmployeeDept", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Employee> findEmployeeByEmployeeDept(@RequestBody EmployeeDto employeeDto) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeDept(employeeDto);
+        return employee;
+    }
+
+//    @RequestMapping(value = "/findEmployeeByEmployeeAddress", method = RequestMethod.POST)
+//    public @ResponseBody
+//    List<Employee> findEmployeeByEmployeeAddress(@RequestBody EmployeeDto employeeDto) {
+//        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(employeeDto);
+//        return employee;
+//    }
 }
