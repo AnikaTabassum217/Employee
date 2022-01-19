@@ -53,29 +53,66 @@ public class EmployeeService {
 
 
 
-    public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
+//    public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
+//        Optional<Employee> employeeOptional = employeeRepository.findById(employeeDto.getId());
+//        Optional<City> cityOptional = cityRepository.findById(employeeDto.getCityId());
+//
+//        if (employeeOptional.isPresent()) {
+//
+//            Employee employee = new Employee();
+//            employee.setId(employeeDto.getId());
+//            employee.setAddress(employeeDto.getAddress());
+//            employee.setPhoneNumber(employeeDto.getPhoneNumber());
+//            //employee.setDateUpdate(employee.getDateUpdate());
+//            employee.setName(employeeDto.getName());
+//            employee.setDepartment(employeeDto.getDepartment());
+//            employee.setAge(employeeDto.getAge());
+//            employee.setCity(cityOptional.get());
+//
+//            employee = employeeRepository.save(employee);
+//            employeeDto.setId(employee.getId());
+//
+//
+//            //return employeeDto;
+//        }
+//        return employeeDto;
+//    }
+
+    public ApiResponse updateEmployee(EmployeeDto employeeDto) {
+
+        ApiResponse response = new ApiResponse(false);
+
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeDto.getId());
+        //Optional<Employee> employeeOPTName = employeeRepository.findByName(employeeDto.getName());
         Optional<City> cityOptional = cityRepository.findById(employeeDto.getCityId());
 
-        if (employeeOptional.isPresent()) {
-
-            Employee employee = new Employee();
-            employee.setId(employeeDto.getId());
+        try{
+            if(!employeeOptional.isPresent()) {
+                throw new Exception("Employee not found");
+            }
+            Employee employee = employeeOptional.get(); // create is a Entity object
+//            if (employeeOPTName.isPresent() && employeeDto.getId() !=employeeOPTName.get().getId()) {
+//                throw new Exception("User name already exist");
+//            }
+            employee.setName(employeeDto.getName());
+            employee.setAge(employeeDto.getAge());
             employee.setAddress(employeeDto.getAddress());
             employee.setPhoneNumber(employeeDto.getPhoneNumber());
-            //employee.setDateUpdate(employee.getDateUpdate());
-            employee.setName(employeeDto.getName());
+            //employee.setDateCreate(employeeDto.getDateCreate());
+            //employee.setDateUpdate(employeeDto.getDateUpdate());
             employee.setDepartment(employeeDto.getDepartment());
-            employee.setAge(employeeDto.getAge());
             employee.setCity(cityOptional.get());
-
             employee = employeeRepository.save(employee);
             employeeDto.setId(employee.getId());
 
-
-            //return employeeDto;
+        }catch (Exception e )
+        {
+            throw new RuntimeException(e.getMessage());
         }
-        return employeeDto;
+        //return employeeDto;
+        response.setSuccess(true);
+        response.setMessage("Created");
+        return response;
     }
 
     public boolean deleteEmployee(Long id) throws Exception {

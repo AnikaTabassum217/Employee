@@ -29,11 +29,24 @@ public class EmployeeController {
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+//
+//    @PutMapping("/update")
+//    public ResponseEntity updateEmployee(@RequestBody EmployeeDto employeeDto) {
+//        employeeDto = employeeService.updateEmployee(employeeDto);
+//        return ResponseEntity.ok(employeeDto);
+//    }
 
     @PutMapping("/update")
-    public ResponseEntity updateEmployee(@RequestBody EmployeeDto employeeDto) {
-        employeeDto = employeeService.updateEmployee(employeeDto);
-        return ResponseEntity.ok(employeeDto);
+    public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDto employeeDto) throws  Exception{
+
+        ApiResponse response = new ApiResponse(false);
+        try{
+            response = employeeService.updateEmployee(employeeDto);
+        }catch (Exception ex){
+            response.setError(ex.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping("/delete/{id}")
