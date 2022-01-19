@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Employee;
+import com.example.demo.model.CityDto;
 import com.example.demo.model.EmployeeDto;
 import com.example.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -30,17 +32,24 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity updateEmployee(@RequestBody EmployeeDto employeeDto) {
-        employeeDto = employeeService.updateEmployee(employeeDto);
-        return ResponseEntity.ok(employeeDto);
-    }
-
-//    @DeleteMapping("/delete/{id}")
-//    public ResponseEntity deleteEmployee(@PathVariable Long id) throws Exception {
-//        boolean result = employeeService.deleteEmployee(id);
-//        return ResponseEntity.ok(result);
+//    @PutMapping("/update")
+//    public ResponseEntity updateEmployee(@RequestBody EmployeeDto employeeDto) {
+//        employeeDto = employeeService.updateEmployee(employeeDto);
+//        return ResponseEntity.ok(employeeDto);
 //    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDto employeeDto) throws  Exception{
+
+        ApiResponse response = new ApiResponse(false);
+        try{
+            response = employeeService.updateEmployee(employeeDto);
+        }catch (Exception ex){
+            response.setError(ex.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteEmployee(@PathVariable Long id) throws Exception {
@@ -65,8 +74,8 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/findEmployeeById")
-    public List <Employee> findEmployeeById(@RequestParam("id") Long id) {
-        List <Employee> employee = employeeService.findEmployeeById(id);
+    public Optional<Employee> findEmployeeById(@RequestParam("id") Long id) {
+        Optional <Employee> employee = employeeService.findEmployeeById(id);
         return employee;
     }
 
