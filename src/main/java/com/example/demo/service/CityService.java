@@ -16,17 +16,7 @@ public class CityService {
     @Autowired
     CityRepository cityRepository;
 
-//    public CityDto createCity(CityDto cityDto) {
-//
-//        City city = new City(); // city is a Entity object
-//
-//        city.setName(cityDto.getName());
-//        city.setPostalCode(cityDto.getPostalCode());
-//
-//        city = cityRepository.save(city);
-//        cityDto.setId(city.getId());
-//        return cityDto;
-//    }
+
 
     public ApiResponse createCity(CityDto cityDto) {
         ApiResponse response = new ApiResponse(false);
@@ -80,25 +70,23 @@ public class CityService {
 
 
 
-//    public City findCityById(CityDto cityDto) {
-//        Optional<City> city = cityRepository.findById(cityDto.getId());
-//        if(city.isPresent()) {
-//            return city.get();
-//        }
-//        return null;
-//    }
+
     public Optional<City> findCityById(Long id) {
         Optional<City> city = cityRepository.findById(id);
         return city;
     }
 
 
-    public boolean deleteCity(long id) throws Exception {
+
+
+    public boolean deleteCity(Long id) throws Exception {
         Optional<City> cityOptional = cityRepository.findById(id);
 
         if (cityOptional.isPresent()) {
+
             City city = cityOptional.get();
             cityRepository.delete(city);
+
         } else {
             throw new Exception("User not found");
         }

@@ -20,12 +20,6 @@ public class CityController {
     @Autowired
     CityService cityService;
 
-//    @PostMapping("/createCity")
-//    public ResponseEntity createCity(@RequestBody CityDto cityDto) {
-//
-//        cityDto = cityService.createCity(cityDto);
-//        return ResponseEntity.ok(cityDto);
-//    }
 
     @PostMapping("/createCity")
     public ResponseEntity<?> createCity(@RequestBody CityDto cityDto) throws  Exception{
@@ -58,15 +52,20 @@ public class CityController {
         return city;
     }
 
-//    @GetMapping(value = "/findEmployeeById")
-//    public List <Employee> findEmployeeById(@RequestParam("id") Long id) {
-//        List <Employee> employee = employeeService.findEmployeeById(id);
-//        return employee;
-//    }
+
 
     @DeleteMapping("/deleteCity/{id}")
-    public ResponseEntity deleteCity(@PathVariable long id) throws Exception {
-        boolean result = cityService.deleteCity(id);
-        return ResponseEntity.ok(result);
+    public ResponseEntity deleteCity(@PathVariable Long id) throws Exception {
+
+        ApiResponse response = new ApiResponse(false);
+        try{
+            boolean result = cityService.deleteCity(id);
+            response.setSuccess(result);
+            response.setMessage("Deleted");
+        }catch (Exception ex){
+            response.setError(ex.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }

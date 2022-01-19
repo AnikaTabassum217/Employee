@@ -77,6 +77,20 @@ public class EmployeeService {
         return employeeDto;
     }
 
+//    public boolean deleteEmployee(Long id) throws Exception {
+//        Optional<Employee> employeeOptional = employeeRepository.findById(id);
+//
+//        if (employeeOptional.isPresent()) {
+//
+//            Employee employee = employeeOptional.get();
+//            employeeRepository.delete(employee);
+//
+//        } else {
+//            throw new Exception("User not found");
+//        }
+//        return true;
+//    }
+
     public boolean deleteEmployee(Long id) throws Exception {
         Optional<Employee> employeeOptional = employeeRepository.findById(id);
 

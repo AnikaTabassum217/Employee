@@ -36,10 +36,25 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeDto);
     }
 
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity deleteEmployee(@PathVariable Long id) throws Exception {
+//        boolean result = employeeService.deleteEmployee(id);
+//        return ResponseEntity.ok(result);
+//    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity deleteEmployee(@PathVariable Long id) throws Exception {
-        boolean result = employeeService.deleteEmployee(id);
-        return ResponseEntity.ok(result);
+
+        ApiResponse response = new ApiResponse(false);
+        try{
+            boolean result = employeeService.deleteEmployee(id);
+            response.setSuccess(result);
+            response.setMessage("Deleted");
+        }catch (Exception ex){
+            response.setError(ex.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
 
