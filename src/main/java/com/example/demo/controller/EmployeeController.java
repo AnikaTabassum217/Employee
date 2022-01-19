@@ -103,9 +103,16 @@ public class EmployeeController {
         return employee;
     }
 
+<<<<<<< HEAD
     @GetMapping(value = "/findEmployeeByEmployeeAddress")
     public List<Employee> findEmployeeByEmployeeAddress(@RequestParam("address") String address) {
         List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(address);
+=======
+    @RequestMapping(value = "/findEmployeeByEmployeeAddress", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Employee> findEmployeeByEmployeeAddress(@RequestBody EmployeeDto employeeDto) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(employeeDto);
+>>>>>>> b9a1de26350cf42e8ccdb0ba6988ff533c2b0301
         return employee;
     }
 }
