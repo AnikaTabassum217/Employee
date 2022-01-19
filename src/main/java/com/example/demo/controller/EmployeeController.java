@@ -86,10 +86,10 @@ public class EmployeeController {
         return employee;
     }
 
-//    @RequestMapping(value = "/findEmployeeByEmployeeAddress", method = RequestMethod.POST)
-//    public @ResponseBody
-//    List<Employee> findEmployeeByEmployeeAddress(@RequestBody EmployeeDto employeeDto) {
-//        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(employeeDto);
-//        return employee;
-//    }
+    @RequestMapping(value = "/findEmployeeByEmployeeAddress", method = RequestMethod.POST)
+    public @ResponseBody
+    List<Employee> findEmployeeByEmployeeAddress(@RequestBody EmployeeDto employeeDto) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(employeeDto);
+        return employee;
+    }
 }

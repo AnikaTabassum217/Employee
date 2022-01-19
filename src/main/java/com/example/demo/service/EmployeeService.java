@@ -125,9 +125,9 @@ public class EmployeeService {
         List<Employee> employee = employeeRepository.findEmployeeByEmployeeDept(employeeDto.getDepartment());
         return employee;
     }
-//
-//    public List<Employee>findEmployeeByEmployeeAddress(EmployeeDto employeeDto) {
-//        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(employeeDto.getAddress());
-//        return employee;
-//    }
+
+    public List<Employee>findEmployeeByEmployeeAddress(EmployeeDto employeeDto) {
+        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(employeeDto.getAddress());
+        return employee;
+    }
 }
