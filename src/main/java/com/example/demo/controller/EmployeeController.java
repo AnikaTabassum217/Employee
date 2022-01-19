@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -18,12 +19,12 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) throws  Exception{
+    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) throws Exception {
 
         ApiResponse response = new ApiResponse(false);
-        try{
+        try {
             response = employeeService.createEmployee(employeeDto);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             response.setError(ex.getMessage());
         }
 
@@ -36,13 +37,19 @@ public class EmployeeController {
 //        return ResponseEntity.ok(employeeDto);
 //    }
 
+//    @PutMapping("/update")
+//    public ResponseEntity updateEmployee(@RequestBody EmployeeDto employeeDto) {
+//        employeeDto = employeeService.updateEmployee(employeeDto);
+//        return ResponseEntity.ok(employeeDto);
+//    }
+
     @PutMapping("/update")
-    public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDto employeeDto) throws  Exception{
+    public ResponseEntity<?> updateEmployee(@RequestBody EmployeeDto employeeDto) throws Exception {
 
         ApiResponse response = new ApiResponse(false);
-        try{
+        try {
             response = employeeService.updateEmployee(employeeDto);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             response.setError(ex.getMessage());
         }
 
@@ -53,11 +60,11 @@ public class EmployeeController {
     public ResponseEntity deleteEmployee(@PathVariable Long id) throws Exception {
 
         ApiResponse response = new ApiResponse(false);
-        try{
+        try {
             boolean result = employeeService.deleteEmployee(id);
             response.setSuccess(result);
             response.setMessage("Deleted");
-        }catch (Exception ex){
+        } catch (Exception ex) {
             response.setError(ex.getMessage());
         }
 
@@ -65,51 +72,45 @@ public class EmployeeController {
     }
 
 
-    @RequestMapping(value = "/findAllEmployee", method = RequestMethod.GET)
+    @GetMapping(value = "/findAllEmployee")
     public List<Employee> findEmployee() throws Exception {
 
         return employeeService.findEmployee();
     }
 
-    @RequestMapping(value = "/findEmployeeById", method = RequestMethod.POST)
-    public @ResponseBody
-    Employee findEmployeeById(@RequestBody EmployeeDto employeeDto) {
-        Employee employee = employeeService.findEmployeeById(employeeDto);
+    @GetMapping(value = "/findEmployeeById")
+    public Optional<Employee> findEmployeeById(@RequestParam("id") Long id) {
+        Optional<Employee> employee = employeeService.findEmployeeById(id);
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByCityId", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByCityId(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByCityId(employeeDto);
+    @GetMapping(value = "/findEmployeeByCityId")
+    public List<Employee> findEmployeeByCityId(@RequestParam("cityId") Long cityId) {
+        List<Employee> employee = employeeService.findEmployeeByCityId(cityId);
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByEmployeeName", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByEmployeeName(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByEmployeeName(employeeDto);
+    @GetMapping(value = "/findEmployeeByEmployeeName")
+    public List<Employee> findEmployeeByEmployeeName(@RequestParam("name") String name) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeName(name);
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByEmployeeAge", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByEmployeeAge(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByEmployeeAge(employeeDto);
+    @GetMapping(value = "/findEmployeeByEmployeeAge")
+    public List<Employee> findEmployeeByEmployeeAge(@RequestParam("age") int age) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeAge(age);
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByEmployeeDept", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByEmployeeDept(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByEmployeeDept(employeeDto);
+    @GetMapping(value = "/findEmployeeByEmployeeDept")
+    public List<Employee> findEmployeeByEmployeeDept(@RequestParam("department") String department) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeDept(department);
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByEmployeeAddress", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByEmployeeAddress(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(employeeDto);
+    @GetMapping(value = "/findEmployeeByEmployeeAddress")
+    public List<Employee> findEmployeeByEmployeeAddress(@RequestParam("address") String address) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(address);
         return employee;
     }
 }
