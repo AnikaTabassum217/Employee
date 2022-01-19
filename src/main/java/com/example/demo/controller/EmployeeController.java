@@ -20,8 +20,6 @@ public class EmployeeController {
     @PostMapping("/create")
     public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) throws  Exception{
 
-//        employeeDto = employeeService.createEmployee(employeeDto);
-//        return ResponseEntity.ok(employeeDto);
         ApiResponse response = new ApiResponse(false);
         try{
             response = employeeService.createEmployee(employeeDto);
@@ -45,23 +43,21 @@ public class EmployeeController {
     }
 
 
-    @RequestMapping(value = "/findAllEmployee", method = RequestMethod.GET)
+    @GetMapping(value = "/findAllEmployee")
     public List<Employee> findEmployee() throws Exception {
 
         return employeeService.findEmployee();
     }
 
     @RequestMapping(value = "/findEmployeeById", method = RequestMethod.POST)
-    public @ResponseBody
-    Employee findEmployeeById(@RequestBody EmployeeDto employeeDto) {
+    public Employee findEmployeeById(@RequestBody EmployeeDto employeeDto) {
         Employee employee = employeeService.findEmployeeById(employeeDto);
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByCityId", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByCityId(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByCityId(employeeDto);
+    @GetMapping(value = "/findEmployeeByCityId")
+    public List<Employee> findEmployeeByCityId(@RequestParam("cityId") Long cityId) {
+        List<Employee> employee = employeeService.findEmployeeByCityId(cityId);
         return employee;
     }
 
@@ -73,8 +69,7 @@ public class EmployeeController {
     }
 
     @RequestMapping(value = "/findEmployeeByEmployeeAge", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByEmployeeAge(@RequestBody EmployeeDto employeeDto) {
+    public @ResponseBody List<Employee> findEmployeeByEmployeeAge(@RequestBody EmployeeDto employeeDto) {
         List<Employee> employee = employeeService.findEmployeeByEmployeeAge(employeeDto);
         return employee;
     }

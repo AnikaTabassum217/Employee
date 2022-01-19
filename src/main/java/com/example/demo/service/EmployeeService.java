@@ -22,16 +22,12 @@ public class EmployeeService {
     CityRepository cityRepository;
 
     public ApiResponse createEmployee(EmployeeDto employeeDto) {
+
         ApiResponse response = new ApiResponse(false);
+
         Optional<City> cityOptional = cityRepository.findById(employeeDto.getCityId());
             try{
                 Employee employee = new Employee(); // create is a Entity object
-            //        create.setId(employeeDto.getId());
-
-//                if(employee.getName().equals(employeeDto.getName()))
-//                {
-//                    throw new Exception("User name already exist");
-//                }
                 if (employeeRepository.findByName(employeeDto.getName()).isPresent()) {
                     throw new Exception("User name already exist");
                 }
@@ -55,8 +51,6 @@ public class EmployeeService {
         response.setMessage("Created");
         return response;
         }
-
-
 
     public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeDto.getId());
@@ -108,8 +102,8 @@ public class EmployeeService {
         }
         return null;
     }
-    public List<Employee> findEmployeeByCityId(EmployeeDto employeeDto) {
-        List<Employee> employee = employeeRepository.findEmployeeByCity(employeeDto.getCityId());
+    public List<Employee> findEmployeeByCityId(Long cityId) {
+        List<Employee> employee = employeeRepository.findEmployeeByCity(cityId);
         return employee;
     }
     public List<Employee>findEmployeeByEmployeeName (EmployeeDto employeeDto) {
