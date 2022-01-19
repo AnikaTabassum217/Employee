@@ -4,12 +4,10 @@ import com.example.demo.controller.ApiResponse;
 import com.example.demo.entity.City;
 import com.example.demo.entity.Employee;
 import com.example.demo.model.CityDto;
-import com.example.demo.model.EmployeeDto;
 import com.example.demo.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,13 +80,18 @@ public class CityService {
 
 
 
-    public City findCityById(CityDto cityDto) {
-        Optional<City> city = cityRepository.findById(cityDto.getId());
-        if(city.isPresent()) {
-            return city.get();
-        }
-        return null;
+//    public City findCityById(CityDto cityDto) {
+//        Optional<City> city = cityRepository.findById(cityDto.getId());
+//        if(city.isPresent()) {
+//            return city.get();
+//        }
+//        return null;
+//    }
+    public Optional<City> findCityById(Long id) {
+        Optional<City> city = cityRepository.findById(id);
+        return city;
     }
+
 
     public boolean deleteCity(long id) throws Exception {
         Optional<City> cityOptional = cityRepository.findById(id);

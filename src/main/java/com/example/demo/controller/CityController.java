@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.City;
+import com.example.demo.entity.Employee;
 import com.example.demo.model.CityDto;
 import com.example.demo.model.EmployeeDto;
 import com.example.demo.service.CityService;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -44,18 +46,23 @@ public class CityController {
         return ResponseEntity.ok(cityDto);
     }
 
-    @RequestMapping(value = "/findAllCity", method = RequestMethod.GET)
+    @GetMapping(value = "/findAllCity")
     public List<City> findCity() throws Exception {
 
         return cityService.findCity();
     }
 
-    @RequestMapping(value = "/findCityById", method = RequestMethod.GET)
-    public @ResponseBody
-    City findCityById(@RequestBody CityDto cityDto) {
-        City city = cityService.findCityById(cityDto);
+    @GetMapping(value = "/findCityById")
+    public Optional<City> findCityById(@RequestParam("id") Long id) {
+       Optional <City> city = cityService.findCityById(id);
         return city;
     }
+
+//    @GetMapping(value = "/findEmployeeById")
+//    public List <Employee> findEmployeeById(@RequestParam("id") Long id) {
+//        List <Employee> employee = employeeService.findEmployeeById(id);
+//        return employee;
+//    }
 
     @DeleteMapping("/deleteCity/{id}")
     public ResponseEntity deleteCity(@PathVariable long id) throws Exception {

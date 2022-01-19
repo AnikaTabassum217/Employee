@@ -95,33 +95,38 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-    public Employee findEmployeeById(EmployeeDto employeeDto) {
-        Optional<Employee> employee = employeeRepository.findById(employeeDto.getId());
-        if(employee.isPresent()) {
-            return employee.get();
-        }
-        return null;
+//    public Employee findEmployeeById(Long id) {
+//        Optional<Employee> employee = employeeRepository.findById(id);
+//        if(employee.isPresent()) {
+//            return employee.get();
+//        }
+//        return null;
+//    }
+
+    public List<Employee> findEmployeeById(Long id) {
+        List<Employee> employee = employeeRepository.findEmployeeByCity(id);
+        return employee;
     }
     public List<Employee> findEmployeeByCityId(Long cityId) {
         List<Employee> employee = employeeRepository.findEmployeeByCity(cityId);
         return employee;
     }
-    public List<Employee>findEmployeeByEmployeeName (EmployeeDto employeeDto) {
-        List<Employee> employee = employeeRepository.findEmployeeByEmployeeName(employeeDto.getName());
+    public List<Employee>findEmployeeByEmployeeName (String name) {
+        List<Employee> employee = employeeRepository.findEmployeeByEmployeeName(name);
         return employee;
     }
-    public List<Employee>findEmployeeByEmployeeAge (EmployeeDto employeeDto) {
-        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAge(employeeDto.getAge());
-        return employee;
-    }
-
-    public List<Employee>findEmployeeByEmployeeDept(EmployeeDto employeeDto) {
-        List<Employee> employee = employeeRepository.findEmployeeByEmployeeDept(employeeDto.getDepartment());
+    public List<Employee>findEmployeeByEmployeeAge (int age) {
+        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAge(age);
         return employee;
     }
 
-    public List<Employee>findEmployeeByEmployeeAddress(EmployeeDto employeeDto) {
-        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(employeeDto.getAddress());
+    public List<Employee>findEmployeeByEmployeeDept(String department) {
+        List<Employee> employee = employeeRepository.findEmployeeByEmployeeDept(department);
+        return employee;
+    }
+
+    public List<Employee>findEmployeeByEmployeeAddress(String address) {
+        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(address);
         return employee;
     }
 }

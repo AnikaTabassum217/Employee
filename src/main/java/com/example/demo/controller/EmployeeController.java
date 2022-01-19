@@ -49,9 +49,9 @@ public class EmployeeController {
         return employeeService.findEmployee();
     }
 
-    @RequestMapping(value = "/findEmployeeById", method = RequestMethod.POST)
-    public Employee findEmployeeById(@RequestBody EmployeeDto employeeDto) {
-        Employee employee = employeeService.findEmployeeById(employeeDto);
+    @GetMapping(value = "/findEmployeeById")
+    public List <Employee> findEmployeeById(@RequestParam("id") Long id) {
+        List <Employee> employee = employeeService.findEmployeeById(id);
         return employee;
     }
 
@@ -61,30 +61,27 @@ public class EmployeeController {
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByEmployeeName", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByEmployeeName(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByEmployeeName(employeeDto);
+    @GetMapping(value = "/findEmployeeByEmployeeName")
+    public List<Employee> findEmployeeByEmployeeName(@RequestParam ("name") String name) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeName(name);
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByEmployeeAge", method = RequestMethod.POST)
-    public @ResponseBody List<Employee> findEmployeeByEmployeeAge(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByEmployeeAge(employeeDto);
+    @GetMapping(value = "/findEmployeeByEmployeeAge")
+    public List<Employee> findEmployeeByEmployeeAge(@RequestParam ("age") int age) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeAge(age);
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByEmployeeDept", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByEmployeeDept(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByEmployeeDept(employeeDto);
+    @GetMapping(value = "/findEmployeeByEmployeeDept")
+    public List<Employee> findEmployeeByEmployeeDept(@RequestParam ("department")String department) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeDept(department);
         return employee;
     }
 
-    @RequestMapping(value = "/findEmployeeByEmployeeAddress", method = RequestMethod.POST)
-    public @ResponseBody
-    List<Employee> findEmployeeByEmployeeAddress(@RequestBody EmployeeDto employeeDto) {
-        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(employeeDto);
+    @GetMapping(value = "/findEmployeeByEmployeeAddress")
+    public List<Employee> findEmployeeByEmployeeAddress(@RequestParam("address") String address) {
+        List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(address);
         return employee;
     }
 }
