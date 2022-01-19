@@ -18,44 +18,44 @@ public class CityService {
     @Autowired
     CityRepository cityRepository;
 
-    public CityDto createCity(CityDto cityDto) {
-
-        City city = new City(); // city is a Entity object
-
-        city.setName(cityDto.getName());
-        city.setPostalCode(cityDto.getPostalCode());
-
-        city = cityRepository.save(city);
-        cityDto.setId(city.getId());
-        return cityDto;
-    }
-
 //    public CityDto createCity(CityDto cityDto) {
-//        ApiResponse response = new ApiResponse(false);
 //
-//        //City city = new City(); // city is a Entity object
+//        City city = new City(); // city is a Entity object
 //
-//        try{
-//            City city = new City(); // city is a Entity object
-//            if (cityRepository.findByCity(cityDto.getName()).isPresent()) {
-//                throw new Exception("City name already exist");
-//            }
 //        city.setName(cityDto.getName());
 //        city.setPostalCode(cityDto.getPostalCode());
 //
 //        city = cityRepository.save(city);
 //        cityDto.setId(city.getId());
-//        //return cityDto;
+//        return cityDto;
 //    }
-//        catch (Exception e )
-//        {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//        //return employeeDto;
-//        response.setSuccess(true);
-//        response.setMessage("Created");
-//        return response;
-//    }
+
+    public ApiResponse createCity(CityDto cityDto) {
+        ApiResponse response = new ApiResponse(false);
+
+        //City city = new City(); // city is a Entity object
+
+        try{
+            City city = new City(); // city is a Entity object
+            if (cityRepository.findByName(cityDto.getName()).isPresent()) {
+                throw new Exception("City name already exist");
+            }
+        city.setName(cityDto.getName());
+        city.setPostalCode(cityDto.getPostalCode());
+
+        city = cityRepository.save(city);
+        cityDto.setId(city.getId());
+        //return cityDto;
+    }
+        catch (Exception e )
+        {
+            throw new RuntimeException(e.getMessage());
+        }
+        //return employeeDto;
+        response.setSuccess(true);
+        response.setMessage("Created");
+        return response;
+    }
 
     public CityDto updateCity(CityDto cityDto) {
         Optional<City> cityOptional = cityRepository.findById(cityDto.getId());

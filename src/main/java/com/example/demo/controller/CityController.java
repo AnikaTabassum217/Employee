@@ -18,25 +18,25 @@ public class CityController {
     @Autowired
     CityService cityService;
 
-    @PostMapping("/createCity")
-    public ResponseEntity createCity(@RequestBody CityDto cityDto) {
-
-        cityDto = cityService.createCity(cityDto);
-        return ResponseEntity.ok(cityDto);
-    }
-
 //    @PostMapping("/createCity")
-//    public ResponseEntity<?> createCity(@RequestBody CityDto cityDto) throws  Exception{
+//    public ResponseEntity createCity(@RequestBody CityDto cityDto) {
 //
-//        ApiResponse response = new ApiResponse(false);
-//        try{
-//            response = cityService.createCity(cityDto);
-//        }catch (Exception ex){
-//            response.setError(ex.getMessage());
-//        }
-//
-//        return ResponseEntity.status(HttpStatus.OK).body(response);
+//        cityDto = cityService.createCity(cityDto);
+//        return ResponseEntity.ok(cityDto);
 //    }
+
+    @PostMapping("/createCity")
+    public ResponseEntity<?> createCity(@RequestBody CityDto cityDto) throws  Exception{
+
+        ApiResponse response = new ApiResponse(false);
+        try{
+            response = cityService.createCity(cityDto);
+        }catch (Exception ex){
+            response.setError(ex.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
 
     @PutMapping("/updateCity")
     public ResponseEntity updateCity(@RequestBody CityDto cityDto) {
