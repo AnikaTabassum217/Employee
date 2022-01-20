@@ -27,11 +27,8 @@ public class EmployeeService {
 
         Optional<City> cityOptional = cityRepository.findById(employeeDto.getCityId());
             try{
-                Employee employee = new Employee(); // create is a Entity object
-<<<<<<< HEAD
-=======
+                Employee employee = new Employee(); // Employee is a Entity object
 
->>>>>>> b9a1de26350cf42e8ccdb0ba6988ff533c2b0301
                 if (employeeRepository.findByName(employeeDto.getName()).isPresent()) {
                     throw new Exception("User name already exist");
                 }
@@ -81,37 +78,71 @@ public class EmployeeService {
 //        return employeeDto;
 //    }
 
+//    public ApiResponse updateEmployee(EmployeeDto employeeDto) {
+//
+//        ApiResponse response = new ApiResponse(false);
+//
+//        Optional<Employee> employeeOptional = employeeRepository.findById(employeeDto.getId());
+//        Optional<Employee> employeeOPTName = employeeRepository.findByName(employeeDto.getName());
+//        Optional<City> cityOptional = cityRepository.findById(employeeDto.getCityId());
+//
+//        try{
+//            Employee employee = new Employee(); // employee is a Entity object
+//            if (employeeOPTName.isPresent() && employeeDto.getId() !=employeeOPTName.get().getId()) {
+//                throw new Exception("User name already exist");
+//            }
+//            employee.setName(employeeDto.getName());
+//            employee.setAge(employeeDto.getAge());
+//            employee.setAddress(employeeDto.getAddress());
+//            employee.setPhoneNumber(employeeDto.getPhoneNumber());
+//            //employee.setDateCreate(employeeDto.getDateCreate());
+//            //employee.setDateUpdate(employeeDto.getDateUpdate());
+//            employee.setDepartment(employeeDto.getDepartment());
+//            employee.setCity(cityOptional.get());
+//            employee = employeeRepository.save(employee);
+//            employeeDto.setId(employee.getId());
+//
+//        }catch (Exception e )
+//        {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//        //return employeeDto;
+//        response.setSuccess(true);
+//        response.setMessage("Updated");
+//        return response;
+//    }
+
     public ApiResponse updateEmployee(EmployeeDto employeeDto) {
 
         ApiResponse response = new ApiResponse(false);
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeDto.getId());
-        Optional<Employee> employeeOPTName = employeeRepository.findByName(employeeDto.getName());
+
         Optional<City> cityOptional = cityRepository.findById(employeeDto.getCityId());
 
-        try{
-            Employee employee = new Employee(); // create is a Entity object
-            if (employeeOPTName.isPresent() && employeeDto.getId() !=employeeOPTName.get().getId()) {
-                throw new Exception("User name already exist");
+        try {
+            if (!employeeOptional.isPresent()) {
+                throw new Exception("Employee not found");
             }
+            Employee employee = employeeOptional.get(); // Employee is a Entity object
+
             employee.setName(employeeDto.getName());
             employee.setAge(employeeDto.getAge());
             employee.setAddress(employeeDto.getAddress());
             employee.setPhoneNumber(employeeDto.getPhoneNumber());
-            //employee.setDateCreate(employeeDto.getDateCreate());
-            //employee.setDateUpdate(employeeDto.getDateUpdate());
+            //employee.setDateUpdate(employee.getDateUpdate());
+            employee.setName(employeeDto.getName());
             employee.setDepartment(employeeDto.getDepartment());
             employee.setCity(cityOptional.get());
             employee = employeeRepository.save(employee);
             employeeDto.setId(employee.getId());
 
-        }catch (Exception e )
-        {
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
         //return employeeDto;
         response.setSuccess(true);
-        response.setMessage("Created");
+        response.setMessage("Updated");
         return response;
     }
 
@@ -134,18 +165,19 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
 
-//    public Employee findEmployeeById(Long id) {
+    public Employee findEmployeeById(Long id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if(employee.isPresent()) {
+            return employee.get();
+        }
+        return null;
+    }
+
+//    public Optional<Employee> findEmployeeById(Long id) {
 //        Optional<Employee> employee = employeeRepository.findById(id);
-//        if(employee.isPresent()) {
-//            return employee.get();
-//        }
-//        return null;
+//        return employee;
 //    }
 
-    public Optional<Employee> findEmployeeById(Long id) {
-        Optional<Employee> employee = employeeRepository.findById(id);
-        return employee;
-    }
     public List<Employee> findEmployeeByCityId(Long cityId) {
         List<Employee> employee = employeeRepository.findEmployeeByCity(cityId);
         return employee;
@@ -168,12 +200,11 @@ public class EmployeeService {
         List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(address);
         return employee;
     }
-<<<<<<< HEAD
-=======
 
-    public List<Employee>findEmployeeByEmployeeAddress(EmployeeDto employeeDto) {
-        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(employeeDto.getAddress());
-        return employee;
-    }
->>>>>>> b9a1de26350cf42e8ccdb0ba6988ff533c2b0301
+
+//    public List<Employee>findEmployeeByEmployeeAddress(EmployeeDto employeeDto) {
+//        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(employeeDto.getAddress());
+//        return employee;
+//    }
+
 }

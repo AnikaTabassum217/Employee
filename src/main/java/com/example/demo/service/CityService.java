@@ -4,6 +4,7 @@ import com.example.demo.controller.ApiResponse;
 import com.example.demo.entity.City;
 import com.example.demo.entity.Employee;
 import com.example.demo.model.CityDto;
+import com.example.demo.model.EmployeeDto;
 import com.example.demo.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,39 +46,58 @@ public class CityService {
         return response;
     }
 
-    public CityDto updateCity(CityDto cityDto) {
+//    public CityDto updateCity(CityDto cityDto) {
+//        Optional<City> cityOptional = cityRepository.findById(cityDto.getId());
+//
+//        if (cityOptional.isPresent()) {
+//
+//
+//            City city = cityOptional.get();
+//
+//            city.setName(cityDto.getName());
+//            city.setPostalCode(cityDto.getPostalCode());
+//
+//            city = cityRepository.save(city);
+//            cityDto.setId(city.getId());
+//
+//            //return employeeDto;
+//        }
+//        return cityDto;
+//    }
+
+    public ApiResponse updateCity(CityDto cityDto) {
+
+        ApiResponse response = new ApiResponse(false);
+
         Optional<City> cityOptional = cityRepository.findById(cityDto.getId());
 
-        if (cityOptional.isPresent()) {
-
-
-            City city = cityOptional.get();
+        try {
+            if (!cityOptional.isPresent()) {
+                throw new Exception("City not found");
+            }
+            City city = cityOptional.get(); // Employee is a Entity object
 
             city.setName(cityDto.getName());
             city.setPostalCode(cityDto.getPostalCode());
-
             city = cityRepository.save(city);
             cityDto.setId(city.getId());
 
-            //return employeeDto;
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
         }
-        return cityDto;
+        //return employeeDto;
+        response.setSuccess(true);
+        response.setMessage("Updated");
+        return response;
     }
-
     public List<City> findCity() {
         return cityRepository.findAll();
     }
-
-
-
 
     public Optional<City> findCityById(Long id) {
         Optional<City> city = cityRepository.findById(id);
         return city;
     }
-
-
-
 
     public boolean deleteCity(Long id) throws Exception {
         Optional<City> cityOptional = cityRepository.findById(id);

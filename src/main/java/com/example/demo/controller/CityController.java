@@ -35,10 +35,23 @@ public class CityController {
     }
 
     @PutMapping("/updateCity")
-    public ResponseEntity updateCity(@RequestBody CityDto cityDto) {
-        cityDto = cityService.updateCity(cityDto);
-        return ResponseEntity.ok(cityDto);
+    public ResponseEntity<?> updateCity(@RequestBody CityDto cityDto) throws Exception {
+
+        ApiResponse response = new ApiResponse(false);
+        try {
+            response = cityService.updateCity(cityDto);
+        } catch (Exception ex) {
+            response.setError(ex.getMessage());
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+
+//    @PutMapping("/updateCity")
+//    public ResponseEntity updateCity(@RequestBody CityDto cityDto) {
+//        cityDto = cityService.updateCity(cityDto);
+//        return ResponseEntity.ok(cityDto);
+//    }
 
     @GetMapping(value = "/findAllCity")
     public List<City> findCity() throws Exception {
@@ -46,13 +59,17 @@ public class CityController {
         return cityService.findCity();
     }
 
-    @GetMapping(value = "/findCityById")
-    public Optional<City> findCityById(@RequestParam("id") Long id) {
+//    @GetMapping(value = "/findCityById")
+//    public Optional<City> findCityById(@RequestParam("id") Long id) {
+//       Optional <City> city = cityService.findCityById(id);
+//        return city;
+//    }
+
+    @GetMapping(value = "/findCityById/{id}")
+    public Optional <City> findCityById(@PathVariable Long id) {
        Optional <City> city = cityService.findCityById(id);
         return city;
     }
-
-
 
     @DeleteMapping("/deleteCity/{id}")
     public ResponseEntity deleteCity(@PathVariable Long id) throws Exception {
