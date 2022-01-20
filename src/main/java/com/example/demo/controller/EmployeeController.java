@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Employee;
-import com.example.demo.model.CityDto;
 import com.example.demo.model.EmployeeDto;
 import com.example.demo.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,17 +19,23 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping("/create")
-    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) throws  Exception{
+    public ResponseEntity<?> createEmployee(@RequestBody EmployeeDto employeeDto) throws Exception {
 
         ApiResponse response = new ApiResponse(false);
-        try{
+        try {
             response = employeeService.createEmployee(employeeDto);
-        }catch (Exception ex){
+        } catch (Exception ex) {
             response.setError(ex.getMessage());
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+//
+//    @PutMapping("/update")
+//    public ResponseEntity updateEmployee(@RequestBody EmployeeDto employeeDto) {
+//        employeeDto = employeeService.updateEmployee(employeeDto);
+//        return ResponseEntity.ok(employeeDto);
+//    }
 
 //    @PutMapping("/update")
 //    public ResponseEntity updateEmployee(@RequestBody EmployeeDto employeeDto) {
@@ -68,11 +73,11 @@ public class EmployeeController {
     public ResponseEntity deleteEmployee(@PathVariable Long id) throws Exception {
 
         ApiResponse response = new ApiResponse(false);
-        try{
+        try {
             boolean result = employeeService.deleteEmployee(id);
             response.setSuccess(result);
             response.setMessage("Deleted");
-        }catch (Exception ex){
+        } catch (Exception ex) {
             response.setError(ex.getMessage());
         }
 
@@ -86,6 +91,7 @@ public class EmployeeController {
         return employeeService.findEmployee();
     }
 
+<<<<<<< HEAD
 //    @GetMapping(value = "/findEmployeeById")
 //    public Optional<Employee> findEmployeeById(@RequestParam("id") Long id) {
 //        Optional <Employee> employee = employeeService.findEmployeeById(id);
@@ -96,6 +102,11 @@ public class EmployeeController {
 
     public  Employee findEmployeeById(@PathVariable Long id) {
         Employee employee = employeeService.findEmployeeById(id);
+=======
+    @GetMapping(value = "/findEmployeeById")
+    public Optional<Employee> findEmployeeById(@RequestParam("id") Long id) {
+        Optional<Employee> employee = employeeService.findEmployeeById(id);
+>>>>>>> refs/remotes/origin/main
         return employee;
     }
 
@@ -106,24 +117,27 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/findEmployeeByEmployeeName")
-    public List<Employee> findEmployeeByEmployeeName(@RequestParam ("name") String name) {
+    public List<Employee> findEmployeeByEmployeeName(@RequestParam("name") String name) {
         List<Employee> employee = employeeService.findEmployeeByEmployeeName(name);
         return employee;
     }
 
     @GetMapping(value = "/findEmployeeByEmployeeAge")
-    public List<Employee> findEmployeeByEmployeeAge(@RequestParam ("age") int age) {
+    public List<Employee> findEmployeeByEmployeeAge(@RequestParam("age") int age) {
         List<Employee> employee = employeeService.findEmployeeByEmployeeAge(age);
         return employee;
     }
 
     @GetMapping(value = "/findEmployeeByEmployeeDept")
-    public List<Employee> findEmployeeByEmployeeDept(@RequestParam ("department")String department) {
+    public List<Employee> findEmployeeByEmployeeDept(@RequestParam("department") String department) {
         List<Employee> employee = employeeService.findEmployeeByEmployeeDept(department);
         return employee;
     }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> refs/remotes/origin/main
     @GetMapping(value = "/findEmployeeByEmployeeAddress")
     public List<Employee> findEmployeeByEmployeeAddress(@RequestParam ("address")String address) {
         List<Employee> employee = employeeService.findEmployeeByEmployeeAddress(address);

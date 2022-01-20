@@ -9,7 +9,6 @@ import com.example.demo.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,6 +25,7 @@ public class EmployeeService {
         ApiResponse response = new ApiResponse(false);
 
         Optional<City> cityOptional = cityRepository.findById(employeeDto.getCityId());
+<<<<<<< HEAD
             try{
                 Employee employee = new Employee(); // Employee is a Entity object
 
@@ -46,13 +46,35 @@ public class EmployeeService {
             }catch (Exception e )
             {
                 throw new RuntimeException(e.getMessage());
+=======
+        try {
+            Employee employee = new Employee(); // create is a Entity object
+
+            if (employeeRepository.findByName(employeeDto.getName()).isPresent()) {
+                throw new Exception("User name already exist");
+>>>>>>> refs/remotes/origin/main
             }
+            employee.setName(employeeDto.getName());
+            employee.setAge(employeeDto.getAge());
+            employee.setAddress(employeeDto.getAddress());
+            employee.setPhoneNumber(employeeDto.getPhoneNumber());
+            employee.setDateCreate(employeeDto.getDateCreate());
+            employee.setDateUpdate(employeeDto.getDateUpdate());
+            employee.setDepartment(employeeDto.getDepartment());
+            employee.setCity(cityOptional.get());
+            employee = employeeRepository.save(employee);
+            employeeDto.setId(employee.getId());
+
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
         //return employeeDto;
         response.setSuccess(true);
         response.setMessage("Created");
         return response;
-        }
-//
+    }
+
+
 //    public EmployeeDto updateEmployee(EmployeeDto employeeDto) {
 //        Optional<Employee> employeeOptional = employeeRepository.findById(employeeDto.getId());
 //        Optional<City> cityOptional = cityRepository.findById(employeeDto.getCityId());
@@ -117,15 +139,26 @@ public class EmployeeService {
         ApiResponse response = new ApiResponse(false);
 
         Optional<Employee> employeeOptional = employeeRepository.findById(employeeDto.getId());
+<<<<<<< HEAD
 
+=======
+        //Optional<Employee> employeeOPTName = employeeRepository.findByName(employeeDto.getName());
+>>>>>>> refs/remotes/origin/main
         Optional<City> cityOptional = cityRepository.findById(employeeDto.getCityId());
 
         try {
             if (!employeeOptional.isPresent()) {
                 throw new Exception("Employee not found");
             }
+<<<<<<< HEAD
             Employee employee = employeeOptional.get(); // Employee is a Entity object
 
+=======
+            Employee employee = employeeOptional.get(); // create is a Entity object
+//            if (employeeOPTName.isPresent() && employeeDto.getId() !=employeeOPTName.get().getId()) {
+//                throw new Exception("User name already exist");
+//            }
+>>>>>>> refs/remotes/origin/main
             employee.setName(employeeDto.getName());
             employee.setAge(employeeDto.getAge());
             employee.setAddress(employeeDto.getAddress());
@@ -145,7 +178,6 @@ public class EmployeeService {
         response.setMessage("Updated");
         return response;
     }
-
 
     public boolean deleteEmployee(Long id) throws Exception {
         Optional<Employee> employeeOptional = employeeRepository.findById(id);
@@ -178,33 +210,50 @@ public class EmployeeService {
 //        return employee;
 //    }
 
+<<<<<<< HEAD
+=======
+    public Optional<Employee> findEmployeeById(Long id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        return employee;
+    }
+
+>>>>>>> refs/remotes/origin/main
     public List<Employee> findEmployeeByCityId(Long cityId) {
         List<Employee> employee = employeeRepository.findEmployeeByCity(cityId);
         return employee;
     }
-    public List<Employee>findEmployeeByEmployeeName (String name) {
+
+    public List<Employee> findEmployeeByEmployeeName(String name) {
         List<Employee> employee = employeeRepository.findEmployeeByEmployeeName(name);
         return employee;
     }
-    public List<Employee>findEmployeeByEmployeeAge (int age) {
+
+    public List<Employee> findEmployeeByEmployeeAge(int age) {
         List<Employee> employee = employeeRepository.findEmployeeByEmployeeAge(age);
         return employee;
     }
 
-    public List<Employee>findEmployeeByEmployeeDept(String department) {
+    public List<Employee> findEmployeeByEmployeeDept(String department) {
         List<Employee> employee = employeeRepository.findEmployeeByEmployeeDept(department);
         return employee;
     }
 
-    public List<Employee>findEmployeeByEmployeeAddress(String address) {
+    public List<Employee> findEmployeeByEmployeeAddress(String address) {
         List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(address);
         return employee;
     }
 
+<<<<<<< HEAD
 
 //    public List<Employee>findEmployeeByEmployeeAddress(EmployeeDto employeeDto) {
 //        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(employeeDto.getAddress());
 //        return employee;
 //    }
 
+=======
+    public List<Employee> findEmployeeByEmployeeAddress(EmployeeDto employeeDto) {
+        List<Employee> employee = employeeRepository.findEmployeeByEmployeeAddress(employeeDto.getAddress());
+        return employee;
+    }
+>>>>>>> refs/remotes/origin/main
 }
